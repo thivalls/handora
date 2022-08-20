@@ -6,22 +6,30 @@ import java.util.List;
 public class Agenda {
     List<Contato> contatos = new ArrayList<>();
 
-    public void addContact(Contato contato) {
-        contatos.add(contato);
+    public void addContact(Contato contato) throws AgendaCheiaException {
+        if (contatos.size() <= 4) {
+            contatos.add(contato);
+            System.out.println(contatos.size());
+        } else {
+            throw new AgendaCheiaException("Agenda cheia");
+        }
     }
 
     public Contato consultar(int id) throws ContatoNaoExisteException {
 
-        if(contatos.isEmpty()) {
-            throw new ContatoNaoExisteException("Nenhum contato foi adicionado ainda");
+        try {
+            Contato contato = contatos.get(id);
+            return contato;
+        } catch (Exception e) {
+            throw new ContatoNaoExisteException("Este contato não existe");
         }
 
-        Contato contato = contatos.get(id);
-        if(contato != null) {
-            System.out.println(contato);
-        } else {
-            throw new ContatoNaoExisteException("minha mensagem customizada");
-        }
-        return contatos.get(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Agenda{" +
+                "contatos=" + contatos +
+                '}';
     }
 }
