@@ -1,7 +1,7 @@
 package application.exceptions;
 
 public class AgendaCheiaException extends Exception {
-    String message = "Agenda cheia!";
+    String message = "Agenda já está cheia!";
 
     public AgendaCheiaException(String message) {
         this.message = message;

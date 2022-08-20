@@ -7,22 +7,17 @@ public class Contato {
     String telefone;
 
     public Contato(String name, String telefone) {
-        countIncrement();
-        this.id = count;
+        this.id = count++;
         this.name = name;
         this.telefone = telefone;
     }
 
-    public static void countIncrement() {
-        count++;
-    }
-
     @Override
     public String toString() {
-        return "Contato{" +
+        return "[" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", telefone='" + telefone + '\'' +
-                '}';
+                ']';
     }
 }

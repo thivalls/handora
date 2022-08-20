@@ -8,21 +8,25 @@ public class Application {
 
         boolean paraSistema = false;
 
-        Agenda agenda = new Agenda();
+        Agenda agenda = new Agenda(2);
 
         while (!paraSistema) {
 
             System.out.println("Escolha uma opção abaixo:");
-            System.out.println("1 - consultar | 2 - adicionar novo contato | 0 - Sair");
+            System.out.println("1 - consultar | 2 - adicionar novo contato | 3 - aumentar limite da agenda | 0 - Sair");
 
             int resultMenu = scan.nextInt();
 
             if (resultMenu == 1) {
                 System.out.println("Digite o id a ser consultado");
-                int idConsultar = scan.nextInt();
+                String nameConsultar = scan.next();
 
-                Contato contatoConsultado = agenda.consultar(idConsultar);
-                System.out.println(contatoConsultado);
+                try {
+                    Contato contatoConsultado = agenda.consultar(nameConsultar);
+                    System.out.println(contatoConsultado);
+                } catch (ContatoNaoExisteException e) {
+                    System.out.println(e.getMessage());
+                }
 
             } else if (resultMenu == 2) {
                 System.out.println("Digite o nome");
@@ -31,12 +35,21 @@ public class Application {
                 String telefone = scan.next();
 
                 try {
-                Contato novoContato = new Contato(name, telefone);
-                agenda.addContact(novoContato);
-                System.out.println("Contato cadastrado com sucesso");
+                    Contato novoContato = new Contato(name, telefone);
+                    agenda.addContact(novoContato);
+                    System.out.println("Contato cadastrado com sucesso");
                 } catch (Exception e) {
-                    System.out.println("Houve um erro!");
                     System.out.println(e.getMessage());
+                }
+            } else if (resultMenu == 3) {
+                System.out.println("O seu limite atual é " + agenda.getLimit());
+                System.out.println("Digite o novo limite");
+                int newLimit = scan.nextInt();
+                if(agenda.contatos.size() > 0 && newLimit < agenda.getLimit()) {
+                    System.out.println("Você não pode setar um valor menor do que o atual");
+                } else {
+                    agenda.setLimit(newLimit);
+                    System.out.println("Limite alterado com sucesso!!!");
                 }
             } else {
                 paraSistema = true;
